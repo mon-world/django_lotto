@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+  <title>My Little Lotto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link href="//fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/lotto.css' %}">
+</head>
+
+
+<!-- a 태크 아래에 도형과 버튼 만듦. -->
+<body>
+ <div class="page-header">
+    <h1>
+        Selected Lotto Numbers
+        <!-- url 패턴의 별명을 줌. 하드코딩 안하고 이렇게 한 이유 : 나중에 쓸수도 -->
+        <a href="{% url 'new_lotto' %}">
+            <!-- 글리피콘 : 기호 넣는 것 / 버튼도 넣어줌 -->
+            <span class="glyphicon glyphicon-plus btn btn-default"></span>
+        </a>
+    </h1>
+</div>
+  <div class="container lotto">
+    <!-- <p>{{lottos}}</p>       중괄호 2개는 변수처럼 사용. fstring 생각 ㄱㄱ -->
+    {% for lotto in lottos %} <!-- db에 든 행 1개씩 가져옴 -->
+      <h2><a href="{% url 'detail' lottokey=lotto.pk %}">{{lotto.text}}</a></h2>
+      <p>{{ lotto.update_date }}</p>
+      <p>{{ lotto.lottos | linebreaksbr }}</p> <!-- html 줄바꿈: | linebreaksbr -->
+    {% endfor %}
+  </div>
+</body>
+</html>
